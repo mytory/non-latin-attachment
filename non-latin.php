@@ -33,6 +33,7 @@ function nlf_prefilter($file) {
  * @param int $attachment
  */
 function nlf_add_attachment($attachment){
+    global $current_user;
 	$post = get_post($attachment);
 	//포스트 타이틀이 없다면 원 파일명으로 첨부파일의 타이틀을 넣어 준다.
 	if( $_SESSION['new_filename'] == $post->post_title ){
