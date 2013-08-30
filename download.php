@@ -13,7 +13,7 @@ if( strstr($_SERVER['HTTP_USER_AGENT'],'Firefox') OR strstr($_SERVER['HTTP_USER_
 		OR strstr($_SERVER['HTTP_USER_AGENT'],'iPhone')){
 	$filename_encoded = $filename_for_download;
 }else{
-	$filename_encoded = urlencode($filename_for_download);
+	$filename_encoded = rawurlencode($filename_for_download);
 }
 header('Content-Disposition: attachment; filename="'.$filename_encoded.'"');
 // orifinal file

@@ -17,7 +17,6 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
  */
 function nlf_prefilter($file) {
 	$path_info = pathinfo($file['name']);
-	
 	$_SESSION['original_filename'] = $file['name'];
 	$new_filename = date('Ymd_His');
 	$_SESSION['new_filename'] = $new_filename;
@@ -25,6 +24,7 @@ function nlf_prefilter($file) {
 	
 	return $file;
 }
+add_filter('wp_handle_upload_prefilter', 'nlf_prefilter');
 
 /**
  * set post_title by original filename.
@@ -33,17 +33,18 @@ function nlf_prefilter($file) {
  * @param int $attachment
  */
 function nlf_add_attachment($attachment){
-    global $current_user;
 	$post = get_post($attachment);
+
 	//포스트 타이틀이 없다면 원 파일명으로 첨부파일의 타이틀을 넣어 준다.
 	if( $_SESSION['new_filename'] == $post->post_title ){
 		$post->post_title = $_SESSION['original_filename'];
+
 		//첨부파일 타이틀 업데이트에 실패하면 에러 메시지를 출력하고 죽는다.
 		if( wp_update_post((array)$post) === 0 ){
-			echo 'error occured! - ';
-			if($current_user->allcaps['level_10']){
-				echo __FILE__ . ' LINE  ' . __LINE__;
-				echo '<br>파일명과 줄 번호는 관리자에게만 보입니다.';
+			echo 'error occured!';
+			if(current_user_can('edit_files')){
+				echo '- ' . __FILE__ . ' LINE  ' . __LINE__;
+				echo '(파일명과 줄 번호는 파일 편집 권한이 있는 사람에게만 보입니다. 따로 권한을 변경하지 않았다면 파일 편집 권한은 관리자에게만 있습니다.)';
 			}
 			exit;
 		}
@@ -51,6 +52,7 @@ function nlf_add_attachment($attachment){
 	unset($_SESSION['original_filename']);
 	unset($_SESSION['new_filename']);
 }
+add_action('add_attachment', 'nlf_add_attachment');
 
 /**
  * Set file download url from download.php script url that plugin has.
@@ -76,9 +78,6 @@ function nlf_wp_get_attachment_url($url, $post_id){
 	$url = plugin_dir_url(__FILE__) . 'download.php?id=' . $post_id;
 	return $url;
 }
-
-add_filter('wp_handle_upload_prefilter', 'nlf_prefilter');
-add_action('add_attachment', 'nlf_add_attachment');
 add_filter('wp_get_attachment_url', 'nlf_wp_get_attachment_url', '', 2);
 
 /**
@@ -89,6 +88,7 @@ function nlf_enqueue_script() {
 	wp_enqueue_script('nlf_gd_bbpress_attachment', plugin_dir_url(__FILE__) . 'non-latin.js', array('jquery'), '1.0.9', 1);
 	wp_localize_script( 'nlf_gd_bbpress_attachment', 'nlf', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 }
+add_action('wp_enqueue_scripts', 'nlf_enqueue_script');
 
 /**
  * Get filename from attachment title.
@@ -116,10 +116,9 @@ function nlf_print_filename_for_download(){
 	echo nlf_get_filename_for_download($_GET['id']);
 	die();
 }
-
 add_action("wp_ajax_filename_for_download", "nlf_print_filename_for_download");
 add_action("wp_ajax_nopriv_filename_for_download", "nlf_print_filename_for_download");
-add_action('wp_enqueue_scripts', 'nlf_enqueue_script');
+
 
 
 //end of non-latin.php
