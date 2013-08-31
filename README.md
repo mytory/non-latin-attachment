@@ -1,14 +1,14 @@
 uploading downloading non-latin filename
 ========================================
 
-Contributors: mytory
-Donate link: http://mytory.co.kr/paypal-donation
-Tags: uploading downloading non-latin filename
-Requires at least: 2.9
-Tested up to: 3.5
-Stable tag: 1.0.9
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+- Contributors: mytory  
+- Donate link: http://mytory.co.kr/paypal-donation  
+- Tags: uploading downloading non-latin filename  
+- Requires at least: 2.9  
+- Tested up to: 3.5  
+- Stable tag: 1.1  
+- License: GPLv2 or later  
+- License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
 This plugin allows you to upload/download non-latin filename.
 
@@ -17,19 +17,23 @@ Description
 
 WordPress cannot attach files with non-latin file name (e.g., Korean). This is the one major drawback to popularization of WordPress among non-english users.
 
-This plugin will rename the file (with latin or non-latin names) to numbers, stores the original file name as a title of media post, and upload the file to the server. When a user attempts to download the file, the file will be returned with corresponding media post's title. But image files will not be processed as such: image files will be returned with numbered name. Because, src value of shoud be real filename on server.
+This plugin will rename the file (if file has non-latin name) to numbers, stores the original file name as a title of media post, and upload the file to the server. When a user attempts to download the file, the file will be returned with corresponding media post's title. But image files will not be processed as such:** image files will be returned with numbered name. Because, src value of shoud be real filename on server.  
 
 This plugin supports GD bbPress Attachments of bbPress.
 
-CAUTION: The files uploaded with this plugin will be downloaded via 'download.php'. Therefore, these file links in the post will be broken when the plugin is removed. But in case of images files these links, of course, will be fine without this plugin.
+<del>CAUTION: The files uploaded with this plugin will be downloaded via 'download.php'. Therefore, these file links in the post will be broken when the plugin is removed. But in case of images files these links, of course, will be fine without this plugin.</del>  
+
+From ver 1.1, not changes file URL. Ajax request changes download url. So, download url in DB points original file url.
 
 워드프레스는 기본적으로 파일명이 알파벳으로 된 것들만 첨부를 할 수 있다. 그래서 파일명이 한글로 돼 있거나 하면 업로드가 되지 않는다. 비 영미권 사용자들에게 가장 골때리는 문제다.
 
-이 플러그인을 설치하면 업로드할 때 파일명을 숫자로 교체한다. (파일명이 영문이든 영문이 아니든 무조건 교체한다.) 대신 원래 파일명은 미디어 포스트의 제목으로 넣어 준다. 사용자가 파일을 다운받을 때는 파일명을 미디어 포스트의 제목으로 바꿔서 다운받게 된다. 물론 이미지파일의 경우 서버의 실제 파일명을 `<img>`의 `src`에 넣어야 하기 때문에 서버에 있는 숫자 파일명을 사용해서 본문에 넣게 된다.
+이 플러그인을 설치하면, 한글로 된 파일명을 제대로 업로드한다. (파일명이 영문인 경우엔 파일명을 바꾸지 않는다.) 대신 원래 파일명은 미디어 포스트의 제목으로 넣어 준다. 사용자가 파일을 다운받을 때는 파일명을 미디어 포스트의 제목으로 바꿔서 다운받게 된다. 물론 이미지파일의 경우 서버의 실제 파일명을 `<img>`의 `src`에 넣어야 하기 때문에 서버에 있는 숫자 파일명을 사용해서 본문에 넣게 된다.
 
 이 플러그인은 bbPress의 GD bbPress Attachments도 지원한다. (파일명이 숫자로 나오게 되는데 이걸 미디어 포스트의 제목으로 변경해 준다. js를 이용한다.)
 
-주의 : 파일을 다운로드할 때 플러그인의 `download.php` 를 거치게 돼 있다. 만약 이 플러그인을 삭제하면 다운로드 링크들은 깨지게 될 거다. 물론 이미지 파일들은 멀쩡할 거다.
+<del>주의 : 파일을 다운로드할 때 플러그인의 `download.php` 를 거치게 돼 있다. 만약 이 플러그인을 삭제하면 다운로드 링크들은 깨지게 될 거다. 물론 이미지 파일들은 멀쩡할 거다.</del>  
+
+버전 1.1부터는 DB 차원에서 URL을 교체하지 않는다. 아작스로 파일을 교체한다. 따라서 플러그인을 제거해도 파일 다운로드 URL이 깨지지 않는다.
 
 Installation
 ------------
@@ -40,18 +44,30 @@ Installation
 Screenshots
 -----------
 
+![screenshot 1](screenshot-1.png)
+
 1. Non-latin(Korean) filename downloaing on Firefox.
+
+![screenshot 2](screenshot-2.png)
+
 1. Non-latin(Korean) filename downloaing on IE.
+
+![screenshot 3](screenshot-3.png)
+
 1. Non-latin(Korean) filename downloaing on Chrome.
 
 Changelog
 ---------
 
 ###1.1
-* download할 때 띄어쓰기 부분에 +가 들어가는 현상 수정.
-* 사용자 권한 검사할 때 deprecated 코드 제거.
-* 파일명이 영문이면 파일명을 바꾸지 않는다.
-* `$_SESSION`을 사용하지 않게 했다.
+- 더이상 download 링크를 `download.php`로 박지 않으므로 플러그인을 제거해도 download 경로가 깨지지 않는다.
+  (아직 과거 URL을 변경하는 것은 만들지 않았음. 나중에 만들 계획.)    
+  Even if you remove this plugin, download url is not break. because ajax request changes download URLs.
+  (Old download.php?id=000 url will ramain. I'll develope old url change script.)
+- 파일명이 영문이면 파일명을 바꾸지 않는다. (Not rename if filename is latin characters.)
+- 사용자 권한 검사할 때 deprecated 코드 제거. (Removed deprecated code when verify user capability.)
+- `$_SESSION`을 사용하지 않게 했다. (No more use `$_SESSION`)
+- Support iPod
 
 ###1.0.9
 Support iPad.
