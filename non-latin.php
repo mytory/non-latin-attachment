@@ -20,7 +20,7 @@ function nlf_prefilter($file) {
 	$unique_id = "{$_SERVER['REQUEST_TIME']}-$current_user->ID";
 
 	// 파일명에 비알파벳이 없다면 파일명 변경은 필요없다.
-	if( $file['name'] == nlf_sanitize_file_name($file['name']) ){
+	if( $file['name'] == nlf_remove_nonlatin_char($file['name']) ){
 		update_user_meta( $current_user->ID, "nlf-need-change-{$unique_id}", "no");
 		return $file;
 	}
@@ -89,8 +89,19 @@ add_action('add_attachment', 'nlf_add_attachment');
  */
 
 function nlf_enqueue_script() {
-	wp_enqueue_script('nlf_gd_bbpress_attachment', plugin_dir_url(__FILE__) . 'non-latin.js', array('jquery'), '1.0.9', 1);
-	wp_localize_script( 'nlf_gd_bbpress_attachment', 'nlf', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+	wp_enqueue_script('nlf-common', plugin_dir_url(__FILE__) . 'non-latin.js', array('jquery'), '1.1', TRUE);
+
+	$plugin_url = plugin_dir_url(__FILE__);
+	$wp_upload_dir = wp_upload_dir();
+	$upload_baseurl = $wp_upload_dir['baseurl'];
+
+	$nlf_arr = array( 
+		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		'plugin_url' => $plugin_url,
+		'upload_baseurl' => $upload_baseurl . '/',
+	);
+
+	wp_localize_script( 'nlf-common', 'nlf', $nlf_arr);
 }
 add_action('wp_enqueue_scripts', 'nlf_enqueue_script');
 
@@ -105,10 +116,11 @@ function nlf_get_filename_for_download($attchment_id){
 	$extension = pathinfo($file, PATHINFO_EXTENSION);
 	$post_title_extenstion = pathinfo($attachment->post_title, PATHINFO_EXTENSION);
 	if($extension != $post_title_extenstion){
-		$filename_for_download = $attachment->post_title . '.' . $extension;
+		$filename_for_download = nlf_sanitize_file_name( $attachment->post_title ) . '.' . $extension;
 	}else{
-		$filename_for_download = $attachment->post_title;
+		$filename_for_download = nlf_sanitize_file_name( $attachment->post_title );
 	}
+
 	return $filename_for_download;
 }
 
@@ -123,6 +135,26 @@ function nlf_print_filename_for_download(){
 add_action("wp_ajax_filename_for_download", "nlf_print_filename_for_download");
 add_action("wp_ajax_nopriv_filename_for_download", "nlf_print_filename_for_download");
 
+/**
+ * ajax로 첨부파일 URL 배열을 받아서 nlf download.php?id=000 형태의 url객체 배열을 json형태로 만들어서 출력
+ */
+function nlf_get_download_url(){
+	global $wpdb;
+	$result = array();
+	foreach ($_REQUEST['attachments'] as $guid) {
+		$post = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE guid = '{$guid}' AND post_type = 'attachment'");
+		if($post){
+			$result[] = array(
+				'guid' => $guid,
+				'download_url' => plugin_dir_url(__FILE__) . 'download.php?id=' . $post->ID
+			);	
+		}
+	}
+	echo json_encode($result);
+	die();
+}
+add_action("wp_ajax_nlf_get_download_url", "nlf_get_download_url");
+add_action("wp_ajax_nopriv_nlf_get_download_url", "nlf_get_download_url");
 
 /**
  * 플러그인을 적용할지 판단할 때 쓰는 파일명 검사 함수.
@@ -131,11 +163,62 @@ add_action("wp_ajax_nopriv_filename_for_download", "nlf_print_filename_for_downl
  * @param string $filename The filename to be sanitized
  * @return string The sanitized filename
  */
-function nlf_sanitize_file_name( $filename ){
+function nlf_remove_nonlatin_char( $filename ){
 	$raw_filename = $filename;
 	$filename = strtolower( $filename );
 	$filename = preg_replace( '/[^a-z0-9_\-\. ]/', '', $filename );
 	return trim($filename);
+}
+
+/**
+ * wp의 sanitize_file_name과 두 가지만 빼고 똑같다.
+ * 1. '\s' 대신 ' '를 사용해서 공백을 제거한다. '\s'가 맥에서 한글 파일명을 sanitize할 때 이상한 현상을 일으키기 때문이다.
+ * 2. apply_filter를 제거했다.
+ * @param  string $filename
+ * @return string
+ */
+function nlf_sanitize_file_name( $filename ){
+	$filename_raw = $filename;
+	$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
+	$special_chars = apply_filters('sanitize_file_name_chars', $special_chars, $filename_raw);
+	$filename = str_replace($special_chars, '', $filename);
+	$filename = preg_replace('/[ -]+/', '-', $filename);
+	$filename = trim($filename, '.-_');
+	
+	// Split the filename into a base and extension[s]
+	$parts = explode('.', $filename);
+
+	// Return if only one extension
+	if ( count($parts) <= 2 ){
+		return $filename;
+	}
+
+	// Process multiple extensions
+	$filename = array_shift($parts);
+	$extension = array_pop($parts);
+	$mimes = get_allowed_mime_types();
+
+	// Loop over any intermediate extensions. Munge them with a trailing underscore if they are a 2 - 5 character
+	// long alpha string not in the extension whitelist.
+	foreach ( (array) $parts as $part) {
+		$filename .= '.' . $part;
+
+		if ( preg_match("/^[a-zA-Z]{2,5}\d?$/", $part) ) {
+			$allowed = false;
+			foreach ( $mimes as $ext_preg => $mime_match ) {
+				$ext_preg = '!^(' . $ext_preg . ')$!i';
+				if ( preg_match( $ext_preg, $part ) ) {
+					$allowed = true;
+					break;
+				}
+			}
+			if ( !$allowed )
+				$filename .= '_';
+		}
+	}
+	$filename .= '.' . $extension;
+
+	return $filename;
 }
 
 //end of non-latin.php
