@@ -36,13 +36,13 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 ## Screenshots ##
 
 ###1. Non-latin(Korean) filename downloaing on Firefox.###
-![Non-latin(Korean) filename downloaing on Firefox.](http://s-plugins.wordpress.org/uploadingdownloading-non-latin-filename/assets/screenshot-1.png)
+![Non-latin(Korean) filename downloaing on Firefox.](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-1.png)
 
 ###2. Non-latin(Korean) filename downloaing on IE.###
-![Non-latin(Korean) filename downloaing on IE.](http://s-plugins.wordpress.org/uploadingdownloading-non-latin-filename/assets/screenshot-2.png)
+![Non-latin(Korean) filename downloaing on IE.](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-2.png)
 
 ###3. Non-latin(Korean) filename downloaing on Chrome.###
-![Non-latin(Korean) filename downloaing on Chrome.](http://s-plugins.wordpress.org/uploadingdownloading-non-latin-filename/assets/screenshot-3.png)
+![Non-latin(Korean) filename downloaing on Chrome.](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-3.png)
 
 
 ## Changelog ##
