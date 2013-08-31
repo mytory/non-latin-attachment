@@ -4,7 +4,7 @@ Donate link: http://mytory.co.kr/paypal-donation
 Tags: uploading downloading non-latin filename
 Requires at least: 2.9
 Tested up to: 3.6
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 1. Non-latin(Korean) filename downloaing on Chrome.
 
 == Changelog ==
+
+= .1.1.1 =
+* 파일명의 대문자를 소문자로 바꾸지 않는다. (No changes uppercase to lowercase.)
+* 플러그인에서 스크린샷을 제외해서 용량을 대폭 줄임. (Remove screenshots from plugin folder. Size went down greatly.)
 
 = 1.1 =
 * 더이상 download 링크를 `download.php`로 박지 않으므로 플러그인을 제거해도 download 경로가 깨지지 않는다.

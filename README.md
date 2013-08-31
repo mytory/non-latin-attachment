@@ -1,27 +1,22 @@
-uploading downloading non-latin filename
-========================================
-
-- Contributors: mytory
-- Donate link: [http://mytory.co.kr/paypal-donation]
-- Tags: uploading downloading non-latin filename
-- Requires at least: 2.9
-- Tested up to: 3.6
-- Stable tag: 1.1
-- License: GPLv2 or later
-- License URI: http://www.gnu.org/licenses/gpl-2.0.html
+# uploading downloading non-latin filename #
+**Contributors:** mytory  
+**Donate link:** http://mytory.co.kr/paypal-donation  
+**Tags:** uploading downloading non-latin filename  
+**Requires at least:** 2.9  
+**Tested up to:** 3.6  
+**Stable tag:** 1.1.1  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 This plugin allows you to upload/download non-latin filename.
 
-Description
------------
+## Description ##
 
 WordPress cannot attach files with non-latin file name (e.g., Korean). This is the one major drawback to popularization of WordPress among non-english users.
 
 This plugin will rename the file (if file has non-latin name) to numbers, stores the original file name as a title of media post, and upload the file to the server. When a user attempts to download the file, the file will be returned with corresponding media post's title. But image files will not be processed as such:** image files will be returned with numbered name. Because, src value of shoud be real filename on server.  
 
 This plugin supports GD bbPress Attachments of bbPress.
-
-<del>CAUTION: The files uploaded with this plugin will be downloaded via 'download.php'. Therefore, these file links in the post will be broken when the plugin is removed. But in case of images files these links, of course, will be fine without this plugin.</del>  
 
 From ver 1.1, not changes file URL. Ajax request changes download url. So, download url in DB points original file url.
 
@@ -31,67 +26,64 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 
 이 플러그인은 bbPress의 GD bbPress Attachments도 지원한다. (파일명이 숫자로 나오게 되는데 이걸 미디어 포스트의 제목으로 변경해 준다. js를 이용한다.)
 
-<del>주의 : 파일을 다운로드할 때 플러그인의 `download.php` 를 거치게 돼 있다. 만약 이 플러그인을 삭제하면 다운로드 링크들은 깨지게 될 거다. 물론 이미지 파일들은 멀쩡할 거다.</del>  
-
 버전 1.1부터는 DB 차원에서 URL을 교체하지 않는다. 아작스로 파일을 교체한다. 따라서 플러그인을 제거해도 파일 다운로드 URL이 깨지지 않는다.
 
-Installation
-------------
+## Installation ##
 
 1. Upload the 'uploadingdownloading-non-latin-filename' folder to the '/wp-content/plugins/' directory. 
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-Screenshots
------------
+## Screenshots ##
 
-![screenshot 1](screenshot-1.png)
+###1. Non-latin(Korean) filename downloaing on Firefox.###
+![Non-latin(Korean) filename downloaing on Firefox.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-1.png)
 
-1. Non-latin(Korean) filename downloaing on Firefox.
+###2. Non-latin(Korean) filename downloaing on IE.###
+![Non-latin(Korean) filename downloaing on IE.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-2.png)
 
-![screenshot 2](screenshot-2.png)
+###3. Non-latin(Korean) filename downloaing on Chrome.###
+![Non-latin(Korean) filename downloaing on Chrome.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-3.png)
 
-1. Non-latin(Korean) filename downloaing on IE.
 
-![screenshot 3](screenshot-3.png)
+## Changelog ##
 
-1. Non-latin(Korean) filename downloaing on Chrome.
+### .1.1.1 ###
+* 파일명의 대문자를 소문자로 바꾸지 않는다. (No changes uppercase to lowercase.)
+* 플러그인에서 스크린샷을 제외해서 용량을 대폭 줄임. (Remove screenshots from plugin folder. Size went down greatly.)
 
-Changelog
----------
-
-###1.1
-- 더이상 download 링크를 `download.php`로 박지 않으므로 플러그인을 제거해도 download 경로가 깨지지 않는다.
+### 1.1 ###
+* 더이상 download 링크를 `download.php`로 박지 않으므로 플러그인을 제거해도 download 경로가 깨지지 않는다.
   (아직 과거 URL을 변경하는 것은 만들지 않았음. 나중에 만들 계획.)    
   Even if you remove this plugin, download url is not break. because ajax request changes download URLs.
   (Old download.php?id=000 url will ramain. I'll develope old url change script.)
-- 파일명이 영문이면 파일명을 바꾸지 않는다. (Not rename if filename is latin characters.)
-- 사용자 권한 검사할 때 deprecated 코드 제거. (Removed deprecated code when verify user capability.)
-- `$_SESSION`을 사용하지 않게 했다. (No more use `$_SESSION`)
-- Support iPod
+* 파일명이 영문이면 파일명을 바꾸지 않는다. (Not rename if filename is latin characters.)
+* 사용자 권한 검사할 때 deprecated 코드 제거. (Removed deprecated code when verify user capability.)
+* `$_SESSION`을 사용하지 않게 했다. (No more use `$_SESSION`)
+* Support iPod
 
-###1.0.9
+### 1.0.9 ###
 Support iPad.
 
-###1.0.8
+### 1.0.8 ###
 Using WP ajax method.
 
-###1.0.7
+### 1.0.7 ###
 correct filename on iPhone.
 
-###1.0.6
+### 1.0.6 ###
 fixed incorrect wp_enqueue_script calling.
 
-###1.0.5
+### 1.0.5 ###
 Changed the file name. bbPress bug fixed.
 
-###1.0.4
+### 1.0.4 ###
 Finally fixed the errors caused by the foldername.
 
-###1.0.3
+### 1.0.3 ###
 Fixed download error. Because plusgin foldername. 
 
-###1.0.2
+### 1.0.2 ###
 fixed for firefox download
 
-###1.0.1
+### 1.0.1 ###
 fixed download error
