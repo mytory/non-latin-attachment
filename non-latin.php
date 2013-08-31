@@ -80,35 +80,9 @@ function nlf_add_attachment($attachment){
 }
 add_action('add_attachment', 'nlf_add_attachment');
 
-
-// TODO data-nlf로 첨부파일의 ID를 집어넣기만 하고 끝낸다.
+// TODO 첨부파일의 ID도 집어 넣지 않는다.
 // TODO 다운로드 링크는 js ajax로 처리한다.
-
-/**
- * Set file download url from download.php script url that plugin has.
- * 파일 다운로드 url을 파일의 url을 직접 거는 대신에 플러그인이 만든 download 스크립트의 url로 바꿔 준다. 
- * 그렇게 함으로써 다운받을 때 첨부파일 포스트의 타이틀로 파일명을 대체해 준다.
- * @param string $url
- * @param int $post_id
- */
-function nlf_wp_get_attachment_url($url, $post_id){
-	//이미지면 실제 url을 돌려 준다.
-	if( wp_attachment_is_image($post_id)){
-		return $url;
-	}
-	
-	//EG_Attchments 플러그인과 충돌하지 않도록 함.
-	$backgrace = debug_backtrace();
-	foreach ($backgrace as $arr) {
-		if(isset($arr['class']) && $arr['class'] == 'EG_Attachments'){
-			return $url;
-		}
-	}
-	
-	$url = plugin_dir_url(__FILE__) . 'download.php?id=' . $post_id;
-	return $url;
-}
-add_filter('wp_get_attachment_url', 'nlf_wp_get_attachment_url', '', 2);
+// 기존에 올린 첨부파일의 경로를 수정하는 기능은 차차 만든다.
 
 /**
  * ========================= for GD bbPress Attachment =================================
@@ -131,9 +105,9 @@ function nlf_get_filename_for_download($attchment_id){
 	$extension = pathinfo($file, PATHINFO_EXTENSION);
 	$post_title_extenstion = pathinfo($attachment->post_title, PATHINFO_EXTENSION);
 	if($extension != $post_title_extenstion){
-		$filename_for_download = sanitize_file_name($attachment->post_title) . '.' . $extension;
+		$filename_for_download = $attachment->post_title . '.' . $extension;
 	}else{
-		$filename_for_download = sanitize_file_name($attachment->post_title);
+		$filename_for_download = $attachment->post_title;
 	}
 	return $filename_for_download;
 }
