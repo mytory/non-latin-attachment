@@ -16,10 +16,22 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @param array $file
  */
 function nlf_prefilter($file) {
+	global $current_user;
+	$unique_id = "{$_SERVER['REQUEST_TIME']}-$current_user->ID";
+
+	// 파일명에 비알파벳이 없다면 파일명 변경은 필요없다.
+	if( $file['name'] == nlf_sanitize_file_name($file['name']) ){
+		update_user_meta( $current_user->ID, "nlf-need-change-{$unique_id}", "no");
+		return $file;
+	}
+
+	update_user_meta( $current_user->ID, "nlf-need-change-{$unique_id}", "yes");
+
+	$unique_id = "{$_SERVER['REQUEST_TIME']}-$current_user->ID";
 	$path_info = pathinfo($file['name']);
-	$_SESSION['original_filename'] = $file['name'];
+	update_user_meta($current_user->ID, "nlf-original-filename-{$unique_id}", $file['name']);
 	$new_filename = date('Ymd_His');
-	$_SESSION['new_filename'] = $new_filename;
+	update_user_meta($current_user->ID, "nlf-new-filename-{$unique_id}", $new_filename);
 	$file['name'] = $new_filename . '.' . $path_info['extension']; 
 	
 	return $file;
@@ -33,26 +45,44 @@ add_filter('wp_handle_upload_prefilter', 'nlf_prefilter');
  * @param int $attachment
  */
 function nlf_add_attachment($attachment){
+	global $current_user;
+
+	$unique_id = "{$_SERVER['REQUEST_TIME']}-$current_user->ID";
 	$post = get_post($attachment);
 
-	//포스트 타이틀이 없다면 원 파일명으로 첨부파일의 타이틀을 넣어 준다.
-	if( $_SESSION['new_filename'] == $post->post_title ){
-		$post->post_title = $_SESSION['original_filename'];
+	$nlf_need_change = get_user_meta($current_user->ID, "nlf-need-change-{$unique_id}", true);
 
-		//첨부파일 타이틀 업데이트에 실패하면 에러 메시지를 출력하고 죽는다.
-		if( wp_update_post((array)$post) === 0 ){
-			echo 'error occured!';
-			if(current_user_can('edit_files')){
-				echo '- ' . __FILE__ . ' LINE  ' . __LINE__;
-				echo '(파일명과 줄 번호는 파일 편집 권한이 있는 사람에게만 보입니다. 따로 권한을 변경하지 않았다면 파일 편집 권한은 관리자에게만 있습니다.)';
+	// 파일명 변경이 필요한 경우
+	if($nlf_need_change == 'yes'){
+		$new_filename = get_user_meta($current_user->ID, "nlf-new-filename-{$unique_id}", true);
+		$orginal_filename = get_user_meta($current_user->ID, "nlf-original-filename-{$unique_id}", true);
+
+		//포스트 타이틀을 사용자가 따로 넣어 주지 않았다면 원 파일명으로 첨부파일의 타이틀을 넣어 준다.
+		if( $new_filename == $post->post_title ){
+			$post->post_title = $orginal_filename;
+
+			//첨부파일 타이틀 업데이트에 실패하면 에러 메시지를 출력하고 죽는다.
+			if( wp_update_post((array)$post) === 0 ){
+				echo 'error occured!';
+				if(current_user_can('edit_files')){
+					echo '- ' . __FILE__ . ' LINE  ' . __LINE__;
+					echo '(파일명과 줄 번호는 파일 편집 권한이 있는 사람에게만 보입니다. 따로 권한을 변경하지 않았다면 파일 편집 권한은 관리자에게만 있습니다.)';
+				}
+				exit;
 			}
-			exit;
 		}
+		
+		// 다 사용한 메타 정보는 삭제한다.
+		delete_user_meta($current_user->ID, "nlf-new-filename-{$unique_id}");
+		delete_user_meta($current_user->ID, "nlf-original-filename-{$unique_id}");
+		delete_user_meta($current_user->ID, "nlf-need-change-{$unique_id}");
 	}
-	unset($_SESSION['original_filename']);
-	unset($_SESSION['new_filename']);
 }
 add_action('add_attachment', 'nlf_add_attachment');
+
+
+// TODO data-nlf로 첨부파일의 ID를 집어넣기만 하고 끝낸다.
+// TODO 다운로드 링크는 js ajax로 처리한다.
 
 /**
  * Set file download url from download.php script url that plugin has.
@@ -120,5 +150,18 @@ add_action("wp_ajax_filename_for_download", "nlf_print_filename_for_download");
 add_action("wp_ajax_nopriv_filename_for_download", "nlf_print_filename_for_download");
 
 
+/**
+ * 플러그인을 적용할지 판단할 때 쓰는 파일명 검사 함수.
+ * 알파벳은 일단 소문자로 변경해 버린다.
+ * 그리고 나서 파일명의 알파벳, 숫자, _, -, 공백만 남기고 나머지는 모두 제거한다.
+ * @param string $filename The filename to be sanitized
+ * @return string The sanitized filename
+ */
+function nlf_sanitize_file_name( $filename ){
+	$raw_filename = $filename;
+	$filename = strtolower( $filename );
+	$filename = preg_replace( '/[^a-z0-9_\-\. ]/', '', $filename );
+	return trim($filename);
+}
 
 //end of non-latin.php
