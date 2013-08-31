@@ -1,7 +1,8 @@
-== TODO List ==
+## TODO List ##
 
+-.과거 download.php?id=000 방식으로 들어간 링크를 원래 파일 링크로 돌리는 스크립트를 짜서 포함시킨다.
 
-== Completed List ==
+## Completed List ##
 
 -.ajax 통신을 워드프레스 방식으로 변경한다. 
 -.플러그인 폴더 경로를 하드코딩하지 말자;; 워드프레스에서 제공하는 상수를 사용하자.

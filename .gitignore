@@ -1,8 +1,5 @@
-
 .buildpath
-
 .project
-
 *.prefs
-
 .settings/org.eclipse.wst.common.project.facet.core.xml
+readme-txt-to-md.sh

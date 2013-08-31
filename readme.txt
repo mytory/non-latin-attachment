@@ -4,7 +4,7 @@ Donate link: http://mytory.co.kr/paypal-donation
 Tags: uploading downloading non-latin filename
 Requires at least: 2.9
 Tested up to: 3.6
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ This plugin allows you to upload/download non-latin filename.
 
 WordPress cannot attach files with non-latin file name (e.g., Korean). This is the one major drawback to popularization of WordPress among non-english users.
 
-This plugin will rename the file (if file has non-latin name) to numbers, stores the original file name as a title of media post, and upload the file to the server. When a user attempts to download the file, the file will be returned with corresponding media post's title. But image files will not be processed as such:** image files will be returned with numbered name. Because, src value of shoud be real filename on server.  
+This plugin will rename the file (if file has non-latin name) to numbers, stores the original file name as a title of media post, and upload the file to the server. When a user attempts to download the file, the file will be returned with corresponding media post's title. But image files will not be processed as such. Image files will be returned with numbered name. Because, src value of shoud be real filename on server.  
 
 This plugin supports GD bbPress Attachments of bbPress.
 
@@ -40,6 +40,9 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 1. Non-latin(Korean) filename downloaing on Chrome.
 
 == Changelog ==
+
+= 1.1.2 =
+* 이미지에 링크가 걸려 있는 경우, 다운로드 링크를 걸지는 않는다. (If link is to image, no link download url.)
 
 = 1.1.1 =
 * 파일명의 대문자를 소문자로 바꾸지 않는다. (No changes uppercase to lowercase.)
