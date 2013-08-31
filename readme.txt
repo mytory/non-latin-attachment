@@ -41,7 +41,7 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 
 == Changelog ==
 
-= .1.1.1 =
+= 1.1.1 =
 * 파일명의 대문자를 소문자로 바꾸지 않는다. (No changes uppercase to lowercase.)
 * 플러그인에서 스크린샷을 제외해서 용량을 대폭 줄임. (Remove screenshots from plugin folder. Size went down greatly.)
 

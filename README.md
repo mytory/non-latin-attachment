@@ -44,21 +44,21 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 ## Screenshots ##
 
 ###1. Non-latin(Korean) filename downloaing on Firefox.
-###
+
 ![Non-latin(Korean) filename downloaing on Firefox.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-1.png)
 
 ###2. Non-latin(Korean) filename downloaing on IE.
-###
+
 ![Non-latin(Korean) filename downloaing on IE.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-2.png)
 
 ###3. Non-latin(Korean) filename downloaing on Chrome.
-###
+
 ![Non-latin(Korean) filename downloaing on Chrome.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-3.png)
 
 
 ## Changelog ##
 
-### .1.1.1 ###
+### 1.1.1 ###
 * 파일명의 대문자를 소문자로 바꾸지 않는다. (No changes uppercase to lowercase.)
 * 플러그인에서 스크린샷을 제외해서 용량을 대폭 줄임. (Remove screenshots from plugin folder. Size went down greatly.)
 
