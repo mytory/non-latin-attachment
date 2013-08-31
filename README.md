@@ -1,12 +1,20 @@
 # uploading downloading non-latin filename #
-**Contributors:** mytory  
-**Donate link:** http://mytory.co.kr/paypal-donation  
-**Tags:** uploading downloading non-latin filename  
-**Requires at least:** 2.9  
-**Tested up to:** 3.6  
-**Stable tag:** 1.1.1  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** mytory
+  
+**Donate link:** http://mytory.co.kr/paypal-donation
+  
+**Tags:** uploading downloading non-latin filename
+  
+**Requires at least:** 2.9
+  
+**Tested up to:** 3.6
+  
+**Stable tag:** 1.1.1
+  
+**License:** GPLv2 or later
+  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+  
 
 This plugin allows you to upload/download non-latin filename.
 
@@ -35,14 +43,17 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 
 ## Screenshots ##
 
-###1. Non-latin(Korean) filename downloaing on Firefox.###
-![Non-latin(Korean) filename downloaing on Firefox.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-1.png)
+###1. Non-latin(Korean) filename downloaing on Firefox.
+###
+![Non-latin(Korean) filename downloaing on Firefox.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-1.png)
 
-###2. Non-latin(Korean) filename downloaing on IE.###
-![Non-latin(Korean) filename downloaing on IE.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-2.png)
+###2. Non-latin(Korean) filename downloaing on IE.
+###
+![Non-latin(Korean) filename downloaing on IE.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-2.png)
 
-###3. Non-latin(Korean) filename downloaing on Chrome.###
-![Non-latin(Korean) filename downloaing on Chrome.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-3.png)
+###3. Non-latin(Korean) filename downloaing on Chrome.
+###
+![Non-latin(Korean) filename downloaing on Chrome.](http://s.wordpress.org/extend/plugins/uploadingdownloading-non-latin-filename/screenshot-3.png)
 
 
 ## Changelog ##
