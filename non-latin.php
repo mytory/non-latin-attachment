@@ -143,12 +143,20 @@ function nlf_get_download_url(){
 	global $wpdb;
 	$result = array();
 	foreach ($_REQUEST['attachments'] as $guid) {
-		$post = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE guid = '{$guid}' AND post_type = 'attachment'");
-		if($post){
-			$result[] = array(
-				'guid' => $guid,
-				'download_url' => plugin_dir_url(__FILE__) . 'download.php?id=' . $post->ID
-			);	
+		$filename = pathinfo($guid, PATHINFO_BASENAME);
+		$filetype = wp_check_filetype($filename);
+
+		// If link is image, no change url.
+		if( ! strstr($filetype['type'], 'image') ){
+			$post = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE guid = '{$guid}' AND post_type = 'attachment'");
+
+			// If there is post.
+			if($post){
+				$result[] = array(
+					'guid' => $guid,
+					'download_url' => plugin_dir_url(__FILE__) . 'download.php?id=' . $post->ID
+				);	
+			}
 		}
 	}
 	echo json_encode($result);
