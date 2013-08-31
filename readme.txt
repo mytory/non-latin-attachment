@@ -18,8 +18,6 @@ This plugin will rename the file (if file has non-latin name) to numbers, stores
 
 This plugin supports GD bbPress Attachments of bbPress.
 
-<del>CAUTION: The files uploaded with this plugin will be downloaded via 'download.php'. Therefore, these file links in the post will be broken when the plugin is removed. But in case of images files these links, of course, will be fine without this plugin.</del>  
-
 From ver 1.1, not changes file URL. Ajax request changes download url. So, download url in DB points original file url.
 
 워드프레스는 기본적으로 파일명이 알파벳으로 된 것들만 첨부를 할 수 있다. 그래서 파일명이 한글로 돼 있거나 하면 업로드가 되지 않는다. 비 영미권 사용자들에게 가장 골때리는 문제다.
@@ -27,8 +25,6 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 이 플러그인을 설치하면, 한글로 된 파일명을 제대로 업로드한다. (파일명이 영문인 경우엔 파일명을 바꾸지 않는다.) 대신 원래 파일명은 미디어 포스트의 제목으로 넣어 준다. 사용자가 파일을 다운받을 때는 파일명을 미디어 포스트의 제목으로 바꿔서 다운받게 된다. 물론 이미지파일의 경우 서버의 실제 파일명을 `<img>`의 `src`에 넣어야 하기 때문에 서버에 있는 숫자 파일명을 사용해서 본문에 넣게 된다.
 
 이 플러그인은 bbPress의 GD bbPress Attachments도 지원한다. (파일명이 숫자로 나오게 되는데 이걸 미디어 포스트의 제목으로 변경해 준다. js를 이용한다.)
-
-<del>주의 : 파일을 다운로드할 때 플러그인의 `download.php` 를 거치게 돼 있다. 만약 이 플러그인을 삭제하면 다운로드 링크들은 깨지게 될 거다. 물론 이미지 파일들은 멀쩡할 거다.</del>  
 
 버전 1.1부터는 DB 차원에서 URL을 교체하지 않는다. 아작스로 파일을 교체한다. 따라서 플러그인을 제거해도 파일 다운로드 URL이 깨지지 않는다.
 
