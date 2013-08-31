@@ -166,8 +166,7 @@ add_action("wp_ajax_nopriv_nlf_get_download_url", "nlf_get_download_url");
  */
 function nlf_remove_nonlatin_char( $filename ){
 	$raw_filename = $filename;
-	$filename = strtolower( $filename );
-	$filename = preg_replace( '/[^a-z0-9_\-\. ]/', '', $filename );
+	$filename = preg_replace( '/[^A-Za-z0-9_\-\. ]/', '', $filename );
 	return trim($filename);
 }
 
