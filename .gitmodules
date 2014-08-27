@@ -1,0 +1,3 @@
+[submodule "Browser.php"]
+	path = Browser.php
+	url = https://github.com/cbschuld/Browser.php.git
