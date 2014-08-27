@@ -4,7 +4,7 @@ Donate link: http://mytory.co.kr/paypal-donation
 Tags: uploading downloading non-latin filename
 Requires at least: 2.9
 Tested up to: 3.8
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 1. Non-latin(Korean) filename downloaing on Chrome.
 
 == Changelog ==
+
+= 1.1.3 =
+
+* Support for greater than IE9.
 
 = 1.1.2 =
 * 이미지에 링크가 걸려 있는 경우, 다운로드 링크를 걸지는 않는다. (If link is to image, no link download url.)
