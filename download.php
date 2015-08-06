@@ -5,7 +5,7 @@ if( ! isset($_GET['id']) or empty($_GET['id'])){
 }
 
 include '../../../wp-blog-header.php';
-include 'Browser.php/lib/Browser.php';
+include 'Browser/lib/Browser.php';
 
 $filename_for_download = nlf_get_filename_for_download($_GET['id']);
 
