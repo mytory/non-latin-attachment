@@ -1,20 +1,12 @@
 # uploading downloading non-latin filename #
-**Contributors:** mytory
-  
-**Donate link:** http://mytory.co.kr/paypal-donation
-  
-**Tags:** uploading downloading non-latin filename
-  
-**Requires at least:** 2.9
-  
-**Tested up to:** 3.8
-  
-**Stable tag:** 1.1.3
-  
-**License:** GPLv2 or later
-  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
-  
+**Contributors:** mytory  
+**Donate link:** http://mytory.co.kr/paypal-donation  
+**Tags:** uploading downloading non-latin filename  
+**Requires at least:** 2.9  
+**Tested up to:** 4.2.4  
+**Stable tag:** 1.1.3  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 This plugin allows you to upload/download non-latin filename.
 
@@ -43,25 +35,20 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 
 ## Screenshots ##
 
-###1. Non-latin(Korean) filename downloaing on Firefox.
-###
-![Non-latin(Korean) filename downloaing on Firefox.
-](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-1.png)
+###1. Non-latin(Korean) filename downloaing on Firefox.###
+![Non-latin(Korean) filename downloaing on Firefox.](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-1.png)
 
-###2. Non-latin(Korean) filename downloaing on IE.
-###
-![Non-latin(Korean) filename downloaing on IE.
-](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-2.png)
+###2. Non-latin(Korean) filename downloaing on IE.###
+![Non-latin(Korean) filename downloaing on IE.](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-2.png)
 
-###3. Non-latin(Korean) filename downloaing on Chrome.
-###
-![Non-latin(Korean) filename downloaing on Chrome.
-](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-3.png)
+###3. Non-latin(Korean) filename downloaing on Chrome.###
+![Non-latin(Korean) filename downloaing on Chrome.](http://dl.dropboxusercontent.com/u/15546257/wordpress-plugin/uploadingdownloading-non-latin-filename/screenshot-3.png)
 
 
 ## Changelog ##
 
 ### 1.1.3 ###
+
 * Support for greater than IE9.
 
 ### 1.1.2 ###
