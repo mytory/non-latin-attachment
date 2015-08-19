@@ -4,7 +4,7 @@ Donate link: http://mytory.co.kr/paypal-donation
 Tags: uploading downloading non-latin filename
 Requires at least: 2.9
 Tested up to: 4.2.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,8 +41,10 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 
 == Changelog ==
 
-= 1.1.3 =
+= 1.1.4 =
+Fix bug on IIS server. Thanks for [chingmo](https://wordpress.org/support/topic/read-error-uploading-downloading-non-latin-filenameversion-131).
 
+= 1.1.3 =
 * Support for greater than IE9.
 
 = 1.1.2 =
