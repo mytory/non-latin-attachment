@@ -13,17 +13,22 @@ This plugin allows you to upload/download non-latin filename.
 
 ## Description 
 
-WordPress cannot attach files with non-latin file name (e.g., Korean). This is the one major drawback to popularization of WordPress among non-english users.
+Server setting for non-english encoding for file download is annoying, intended to bug. Because multi layer is related.
+
+Wordpress rejects uploaded files if server setting is not proper. It's shocking.
 
 This plugin will rename the file (if file has non-latin name) to numbers, stores the original file name as a title of media post, and upload the file to the server. When a user attempts to download the file, the file will be returned with corresponding media post's title. But image files will not be processed as such. Image files will be returned with numbered name. Because, src value of shoud be real filename on server.  
 
 From ver 1.1, not changes file URL. Ajax request changes download url. So, download url in DB points original file url.
 
-워드프레스는 기본적으로 파일명이 알파벳으로 된 것들만 첨부를 할 수 있다. 그래서 파일명이 한글로 돼 있거나 하면 업로드가 되지 않는다. 비 영미권 사용자들에게 가장 골때리는 문제다.
+비영문 파일명을 업로드하고 다운로드할 수 있게 서버를 설정하는 것은 귀찮은 일이고, 버그가 일어나기도 쉽다. 여러 계층이 연관되는 문제기 때문이다.
 
-이 플러그인을 설치하면, 한글로 된 파일명을 제대로 업로드한다. (파일명이 영문인 경우엔 파일명을 바꾸지 않는다.) 대신 원래 파일명은 미디어 포스트의 제목으로 넣어 준다. 사용자가 파일을 다운받을 때는 파일명을 미디어 포스트의 제목으로 바꿔서 다운받게 된다. 물론 이미지파일의 경우 서버의 실제 파일명을 `<img>`의 `src`에 넣어야 하기 때문에 서버에 있는 숫자 파일명을 사용해서 본문에 넣게 된다.
+워드프레스는 비영문 파일을 업로드했을 때 서버 설정이 제대로 돼 있지 않으면 거부해 버린다. 벙찐다.
 
-버전 1.1부터는 DB 차원에서 URL을 교체하지 않는다. 아작스로 파일을 교체한다. 따라서 플러그인을 제거해도 파일 다운로드 URL이 깨지지 않는다.
+이 플러그인을 설치하면, 비영문 파일명을 숫자로 변경한다. (파일명이 영문인 경우엔 파일명을 바꾸지 않는다.) 대신 원래 파일명은 미디어 포스트의 제목으로 넣어 준다. 사용자가 파일을 다운받을 때는 파일명을 미디어 포스트의 제목으로 바꿔서 다운받게 된다. 물론 이미지파일의 경우 서버의 실제 파일명을 `<img>`의 `src`에 넣어야 하기 때문에 서버에 있는 숫자 파일명을 사용해서 본문에 넣게 된다.
+
+버전 1.1부터는 DB 차원에서 URL을 교체하지 않는다. ajax로 파일을 교체한다. 따라서 플러그인을 제거해도 파일 다운로드 URL이 깨지지 않는다.
+
 
 
 ## Installation 
