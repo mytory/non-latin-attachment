@@ -28,7 +28,7 @@ if(
 status_header(200);
 header('cache-control: no-cache');
 header('Content-type: ' . $attachment->post_mime_type);
-header("Content-Disposition: attachment; filename=" . $filename_encoded);
+header("Content-Disposition: attachment; filename*=UTF-8''{$filename_encoded}");
 
 // orifinal file
 readfile($original_filepath);
