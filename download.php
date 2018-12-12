@@ -1,6 +1,6 @@
 <?php
 if (! isset($_GET['id']) or empty($_GET['id']) or ! is_numeric($_GET['id'])) {
-    echo "error! enter attachment ID!";
+    echo "You should enter valid attachment_id.";
     exit;
 }
 
@@ -9,6 +9,10 @@ include '../../../wp-blog-header.php';
 $id = (int) $_GET['id'];
 
 $filename_for_download = nlf_get_filename_for_download($id);
+
+if ($filename_for_download === '') {
+	echo "There's no such a attachment.";
+}
 
 $attachment      = get_post($id);
 $attachment_meta = get_post_meta($id);

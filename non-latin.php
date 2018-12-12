@@ -122,6 +122,11 @@ add_action('wp_enqueue_scripts', 'nlf_enqueue_script');
 function nlf_get_filename_for_download($attachment_id)
 {
     $attachment = get_post($attachment_id);
+
+    if (!$attachment) {
+    	return '';
+    }
+
     $file = get_attached_file($attachment_id);
     $extension = pathinfo($file, PATHINFO_EXTENSION);
     $post_title_extension = pathinfo($attachment->post_title, PATHINFO_EXTENSION);
