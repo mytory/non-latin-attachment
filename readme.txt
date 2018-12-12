@@ -4,7 +4,7 @@ Donate link: http://mytory.net/paypal-donation/
 Tags: uploading downloading non-latin filename
 Requires at least: 2.9
 Tested up to: 5.0
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,9 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 1. Non-latin(Korean) filename downloaing on Chrome.
 
 == Changelog ==
+
+= 1.1.7 =
+Show detail error message, instead of downloading empty file, when insert not valid attachment_id to download url.
 
 = 1.1.6 =
 Apply RFC6266 to download.
