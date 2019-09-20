@@ -27,7 +27,7 @@ jQuery(document).ready(function($){
 		$.post(nlf.ajaxurl, post_vars, function(result){
 			for (var i = result.length - 1; i >= 0; i--) {
 				var obj = result[i];
-				$('a[href="' + obj.guid + '"]').attr('href', obj.download_url);
+				$('a[href="' + obj.guid + '"]').attr('download', obj.title);
 			}
 		}, 'json');
 	}

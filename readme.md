@@ -4,7 +4,7 @@
 **Tags:** uploading downloading non-latin filename  
 **Requires at least:** 2.9  
 **Tested up to:** 5.0  
-**Stable tag:** 1.1.7  
+**Stable tag:** 1.2.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -51,6 +51,9 @@ From ver 1.1, not changes file URL. Ajax request changes download url. So, downl
 
 
 ## Changelog 
+
+### 1.2.0
+Change download logic. Use download attribute instead of download.php.
 
 
 ### 1.1.7 
