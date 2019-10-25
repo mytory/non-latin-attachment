@@ -21,7 +21,7 @@ jQuery(document).ready(function($){
 	});
 	if(attachments.length > 0){
 		var post_vars = {
-			'action': 'nlf_get_download_url',
+			'action': 'non_latin_attachments_get_download_url',
 			'attachments': attachments
 		};
 		$.post(nlf.ajaxurl, post_vars, function(result){

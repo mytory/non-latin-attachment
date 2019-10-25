@@ -20,13 +20,13 @@ if (php_sapi_name() == 'cli') {
  * @param array $file
  * @return array
  */
-function nlf_prefilter($file)
+function non_latin_attachments_prefilter($file)
 {
     global $current_user;
     $unique_id = "{$_SERVER['REQUEST_TIME']}-$current_user->ID";
 
     // 파일명에 비알파벳이 없다면 파일명 변경은 필요없다.
-    if ($file['name'] == nlf_remove_nonlatin_char($file['name'])) {
+    if ($file['name'] == non_latin_attachments_remove_nonlatin_char($file['name'])) {
         update_user_meta($current_user->ID, "nlf-need-change-{$unique_id}", "no");
         return $file;
     }
@@ -43,7 +43,7 @@ function nlf_prefilter($file)
     return $file;
 }
 
-add_filter('wp_handle_upload_prefilter', 'nlf_prefilter');
+add_filter('wp_handle_upload_prefilter', 'non_latin_attachments_prefilter');
 
 /**
  * set post_title by original filename.
@@ -51,17 +51,17 @@ add_filter('wp_handle_upload_prefilter', 'nlf_prefilter');
  * $attachment 는 post_id 다.
  * @param int $attachment_id
  */
-function nlf_add_attachment($attachment_id)
+function non_latin_attachments_add_attachment($attachment_id)
 {
     global $current_user;
 
     $unique_id = "{$_SERVER['REQUEST_TIME']}-$current_user->ID";
     $attachment = get_post($attachment_id);
 
-    $nlf_need_change = get_user_meta($current_user->ID, "nlf-need-change-{$unique_id}", true);
+    $non_latin_attachments_need_change = get_user_meta($current_user->ID, "nlf-need-change-{$unique_id}", true);
 
     // 파일명 변경이 필요한 경우
-    if ($nlf_need_change == 'yes') {
+    if ($non_latin_attachments_need_change == 'yes') {
         $original_filename = get_user_meta($current_user->ID, "nlf-original-filename-{$unique_id}", true);
 
         //첨부파일 제목을 사용자가 따로 넣어 주지 않았다면 원 파일명으로 첨부파일의 타이틀을 넣는다.
@@ -85,7 +85,7 @@ function nlf_add_attachment($attachment_id)
     }
 }
 
-add_action('add_attachment', 'nlf_add_attachment');
+add_action('add_attachment', 'non_latin_attachments_add_attachment');
 
 // TODO 첨부파일의 ID도 집어 넣지 않는다.
 
@@ -93,7 +93,7 @@ add_action('add_attachment', 'nlf_add_attachment');
  * ========================= for GD bbPress Attachment =================================
  */
 
-function nlf_enqueue_script()
+function non_latin_attachments_enqueue_script()
 {
     wp_enqueue_script('jquery');
     wp_enqueue_script('nlf-common', plugin_dir_url(__FILE__) . 'non-latin.js', array('jquery'), '1.1.4', TRUE);
@@ -102,16 +102,16 @@ function nlf_enqueue_script()
     $wp_upload_dir = wp_upload_dir();
     $upload_base_url = $wp_upload_dir['baseurl'];
 
-    $nlf_arr = array(
+    $non_latin_attachments_arr = array(
         'ajaxurl' => admin_url('admin-ajax.php'),
         'plugin_url' => $plugin_url,
         'upload_baseurl' => $upload_base_url . '/',
     );
 
-    wp_localize_script('nlf-common', 'nlf', $nlf_arr);
+    wp_localize_script('nlf-common', 'nlf', $non_latin_attachments_arr);
 }
 
-add_action('wp_enqueue_scripts', 'nlf_enqueue_script');
+add_action('wp_enqueue_scripts', 'non_latin_attachments_enqueue_script');
 
 /**
  * Get filename from attachment title.
@@ -119,7 +119,7 @@ add_action('wp_enqueue_scripts', 'nlf_enqueue_script');
  * @param int $attachment_id
  * @return string
  */
-function nlf_get_filename_for_download($attachment_id)
+function non_latin_attachments_get_filename_for_download($attachment_id)
 {
     $attachment = get_post($attachment_id);
 
@@ -131,9 +131,9 @@ function nlf_get_filename_for_download($attachment_id)
     $extension = pathinfo($file, PATHINFO_EXTENSION);
     $post_title_extension = pathinfo($attachment->post_title, PATHINFO_EXTENSION);
     if ($extension != $post_title_extension) {
-        $filename_for_download = nlf_sanitize_file_name($attachment->post_title) . '.' . $extension;
+        $filename_for_download = non_latin_attachments_sanitize_file_name($attachment->post_title) . '.' . $extension;
     } else {
-        $filename_for_download = nlf_sanitize_file_name($attachment->post_title);
+        $filename_for_download = non_latin_attachments_sanitize_file_name($attachment->post_title);
     }
 
     return $filename_for_download;
@@ -143,19 +143,19 @@ function nlf_get_filename_for_download($attachment_id)
  * Print filename for download that made from attachment title.
  * 첨부파일 post_title을 기반으로 다운로드용 파일명을 만들어 출력한다.
  */
-function nlf_print_filename_for_download()
+function non_latin_attachments_print_filename_for_download()
 {
-    echo nlf_get_filename_for_download($_GET['id']);
+    echo non_latin_attachments_get_filename_for_download($_GET['id']);
     die();
 }
 
-add_action("wp_ajax_filename_for_download", "nlf_print_filename_for_download");
-add_action("wp_ajax_nopriv_filename_for_download", "nlf_print_filename_for_download");
+add_action("wp_ajax_filename_for_download", "non_latin_attachments_print_filename_for_download");
+add_action("wp_ajax_nopriv_filename_for_download", "non_latin_attachments_print_filename_for_download");
 
 /**
  * ajax로 첨부파일 URL 배열을 받아서 nlf download.php?id=000 형태의 url객체 배열을 json형태로 만들어서 출력
  */
-function nlf_get_download_url()
+function non_latin_attachments_get_download_url()
 {
     global $wpdb;
     $result = array();
@@ -187,8 +187,8 @@ function nlf_get_download_url()
     die();
 }
 
-add_action("wp_ajax_nlf_get_download_url", "nlf_get_download_url");
-add_action("wp_ajax_nopriv_nlf_get_download_url", "nlf_get_download_url");
+add_action("wp_ajax_non_latin_attachments_get_download_url", "non_latin_attachments_get_download_url");
+add_action("wp_ajax_nopriv_non_latin_attachments_get_download_url", "non_latin_attachments_get_download_url");
 
 /**
  * 플러그인을 적용할지 판단할 때 쓰는 파일명 검사 함수.
@@ -197,7 +197,7 @@ add_action("wp_ajax_nopriv_nlf_get_download_url", "nlf_get_download_url");
  * @param string $filename The filename to be sanitized
  * @return string The sanitized filename
  */
-function nlf_remove_nonlatin_char($filename)
+function non_latin_attachments_remove_nonlatin_char($filename)
 {
     $raw_filename = $filename;
     $filename = preg_replace('/[^A-Za-z0-9_\-\. ]/', '', $filename);
@@ -211,7 +211,7 @@ function nlf_remove_nonlatin_char($filename)
  * @param  string $filename
  * @return string
  */
-function nlf_sanitize_file_name($filename)
+function non_latin_attachments_sanitize_file_name($filename)
 {
     $filename_raw = $filename;
     $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
