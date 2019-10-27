@@ -12,6 +12,8 @@ Specific web server break non-latin filename. Wordpress don't touch attachment's
 
 This plugin change filename to numbers. And when the file is downloaded, the attachment's title will be set as filename.
 
+If the filename is all alphabet and numbers, the plugin do nothing.
+
 It use html5 download property. It's all. If you disable the plugin, nothing is break.
 
 == Installation ==
