@@ -3,7 +3,7 @@ Contributors: mytory
 Donate link: http://mytory.net/paypal-donation/
 Tags: non-latin filename attachment
 Requires at least: 2.9
-Tested up to: 5.2.4
+Tested up to: 5.7.1
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
